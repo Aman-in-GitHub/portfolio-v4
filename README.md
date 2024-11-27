@@ -1,4 +1,4 @@
-## _Blazing fast website at [Aman's Portfolio](https://amanchand.com.np)_
+## _Blazingly fast website at [Aman's Portfolio](https://amanchand.com.np)_
 
 ## Previous versions
 
