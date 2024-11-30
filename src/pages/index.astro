@@ -1,10 +1,128 @@
 ---
 import "@/styles/globals.css";
-import Layout from "../layouts/Layout.astro";
+import Layout from "@/layouts/Layout.astro";
+import Link from "@/components/Link.astro";
+import Footer from "@/components/Footer";
+import { PROJECTS } from "@/utils/info";
+import { ACHIEVEMENTS } from "@/utils/info";
+import { EXPERIENCES } from "@/utils/info";
+import { EMAIL_ADDRESS } from "@/utils/info";
 ---
 
-<Layout title="Aman - Portfolio">
-  <main>
-    <h1>I am Aman, a software developer.</h1>
+<Layout title="Aman Chand">
+  <main class="max-w-[500px] lg:max-w-[750px] flex flex-col gap-6 lg:gap-8">
+    <a href="/">
+      <h1
+        class="text-neutral-400 hover:text-special duration-500 text-4xl font-special"
+      >
+        Aman Chand
+      </h1>
+    </a>
+
+    <section class="flex flex-col gap-4 lg:gap-6">
+      <p>
+        Full stack software developer. Currently working on <span
+          class="bg-gradient-to-r from-blue via-orange to-purple bg-clip-text text-transparent selection:text-purple selection:bg-neutral-800 whitespace-nowrap"
+        >
+          <a
+            href="https://bitly.com/98K8eH"
+            class="underline duration-500 hover:text-orange hover:decoration-white decoration-purple underline-offset-4"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            something special
+          </a>
+        </span>
+      </p>
+      <p class="group">
+        This website is heavily
+        <span class="relative">
+          <span class="lg:group-hover:invisible">inspired by</span>
+          <span
+            class="hidden lg:block lg:absolute left-0 top-0 invisible group-hover:visible text-sm mt-0.5"
+            >copied from</span
+          >
+        </span>
+        <Link title="Paco.me" href="https://paco.me" />
+      </p>
+    </section>
+
+    <section
+      class="flex flex-col lg:flex-row justify-between text-neutral-400 gap-6 lg:gap-8"
+    >
+      <div class="lg:w-52">
+        <h3 class="mb-6 lg:mb-8">Projects</h3>
+
+        <div class="flex flex-col gap-4 lg:gap-6">
+          {
+            PROJECTS.map(({ title, description, link }) => (
+              <div class="flex flex-col gap-2">
+                <Link title={title} href={link} />
+                <p>{description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="lg:w-52">
+        <h3 class="mb-6 lg:mb-8">Achievements</h3>
+
+        <div class="flex flex-col gap-4 lg:gap-6">
+          {
+            ACHIEVEMENTS.map(({ title, description, link }) => (
+              <div class="flex flex-col gap-2">
+                <Link title={title} href={link} />
+                <p>{description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <div class="lg:w-52">
+        <h3 class="mb-6 lg:mb-8">Experience</h3>
+
+        <div class="flex flex-col gap-4 lg:gap-6">
+          {
+            EXPERIENCES.map(({ title, description, link }) => (
+              <div class="flex flex-col gap-2">
+                <Link title={title} href={link} />
+                <p>{description}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-4 lg:gap-6">
+      <h2 class="font-special text-3xl mb-2 text-neutral-400">More about me</h2>
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita eaque
+        tenetur dignissimos quasi magni optio quam doloribus nesciunt
+        exercitationem consectetur reprehenderit repellat alias, ab itaque
+        dolores atque. Id, quisquam autem.
+      </p>
+
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita eaque
+        tenetur dignissimos quasi magni optio quam doloribus nesciunt
+        exercitationem consectetur reprehenderit repellat alias, ab itaque
+        dolores atque. Id, quisquam autem.
+      </p>
+    </section>
+
+    <section class="flex flex-col gap-4 lg:gap-6">
+      <h2 class="font-special text-3xl text-neutral-400 mb-2">Contact</h2>
+      <p>
+        Send a message at <Link
+          title={EMAIL_ADDRESS}
+          href=`mailto:${EMAIL_ADDRESS}`
+        />
+      </p>
+    </section>
+
+    <section class="relative mt-12 lg:mt-36">
+      <Footer client:load />
+    </section>
   </main>
 </Layout>
