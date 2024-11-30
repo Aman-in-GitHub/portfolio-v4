@@ -4,7 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Link from "@/components/Link.astro";
 // import Messages from "@/components/Messages";
 import Footer from "@/components/Footer";
-import { PROJECTS, GITHUB } from "@/utils/info";
+import { GITHUB, PROJECTS } from "@/utils/info";
 import { ACHIEVEMENTS } from "@/utils/info";
 import { EXPERIENCES } from "@/utils/info";
 import { EMAIL_ADDRESS } from "@/utils/info";
@@ -15,8 +15,16 @@ import { EMAIL_ADDRESS } from "@/utils/info";
     <img
       src="/gengar.png"
       alt="Scary Gengar"
-      class="size-20 lg:size-40 absolute top-4 right-4 opacity-0 hover:opacity-100 duration-[3s]"
+      class="size-20 lg:size-40 absolute top-4 right-4 opacity-0 hover:opacity-100 duration-[3s] cursor-pointer"
+      onclick="playAudio()"
     />
+
+    <script is:inline>
+      function playAudio() {
+        const audio = new Audio("/gengar.ogg");
+        audio.play();
+      }
+    </script>
 
     <a href="/">
       <h1
