@@ -64,17 +64,28 @@ const { title } = Astro.props;
 
 <script>
   let intensity = 1;
+  let isWindowFocused = true;
 
   function launchConfetti() {
-    // @ts-ignore
-    confetti({
-      particleCount: 250 * intensity,
-      spread: 75 * intensity,
-      origin: { y: 1 },
-    });
+    if (isWindowFocused) {
+      // @ts-ignore
+      confetti({
+        particleCount: 250 * intensity,
+        spread: 75 * intensity,
+        origin: { y: 1 },
+      });
+    }
   }
 
   function startConfettiSequence() {
+    window.addEventListener("focus", () => {
+      isWindowFocused = true;
+    });
+
+    window.addEventListener("blur", () => {
+      isWindowFocused = false;
+    });
+
     setTimeout(() => {
       launchConfetti();
 
@@ -86,9 +97,13 @@ const { title } = Astro.props;
         }
 
         launchConfetti();
-      }, 30000);
-    }, 30000);
+      }, 15000);
+    }, 15000);
   }
+
+  document.addEventListener("visibilitychange", () => {
+    isWindowFocused = !document.hidden;
+  });
 
   startConfettiSequence();
 </script>
