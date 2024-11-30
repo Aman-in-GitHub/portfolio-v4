@@ -40,8 +40,9 @@ const { title } = Astro.props;
     <Posthog />
     <script
       is:inline
-      src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"
-      defer></script>
+      defer
+      src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"
+    ></script>
     <script
       is:inline
       type="application/ld+json"
@@ -63,18 +64,86 @@ const { title } = Astro.props;
 </html>
 
 <script>
-  let intensity = 1;
+  let intensity = 0;
   let isWindowFocused = true;
+  let hasReachedMaxIntensity = false;
 
-  function launchConfetti() {
-    if (isWindowFocused) {
+  const today = new Date();
+
+  const isTodayBirthday =
+    isWindowFocused && today.getMonth() === 10 && today.getDate() === 5;
+
+  if (isTodayBirthday) {
+    const defaults = {
+      spread: 400,
+      ticks: 100,
+      gravity: 0,
+      decay: 0.94,
+      startVelocity: 30,
+    };
+
+    function shoot() {
       // @ts-ignore
       confetti({
-        particleCount: 250 * intensity,
-        spread: 75 * intensity,
-        origin: { y: 1 },
+        ...defaults,
+        particleCount: 100,
+        scalar: 1.75,
+        shapes: ["circle", "square"],
+        colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+      });
+      // @ts-ignore
+      confetti({
+        ...defaults,
+        particleCount: 100,
+        scalar: 1.75,
+        shapes: ["emoji"],
+        shapeOptions: {
+          emoji: {
+            value: ["🎁", "🎂", "🍫"],
+          },
+        },
       });
     }
+
+    setTimeout(shoot, 0);
+    setTimeout(shoot, 100);
+    setTimeout(shoot, 200);
+  }
+
+  const isTodayValentine =
+    isWindowFocused && today.getMonth() === 1 && today.getDate() === 14;
+
+  if (isTodayValentine) {
+    const defaults = {
+      spread: 360,
+      ticks: 100,
+      gravity: 0,
+      decay: 0.94,
+      startVelocity: 30,
+      shapes: ["heart"],
+      colors: ["#ffc0cb", "#ff69b4", "#ff1493", "#c71585"],
+    };
+
+    // @ts-ignore
+    confetti({
+      ...defaults,
+      particleCount: 100,
+      scalar: 2,
+    });
+
+    // @ts-ignore
+    confetti({
+      ...defaults,
+      particleCount: 75,
+      scalar: 3,
+    });
+
+    // @ts-ignore
+    confetti({
+      ...defaults,
+      particleCount: 50,
+      scalar: 4,
+    });
   }
 
   function startConfettiSequence() {
@@ -86,19 +155,133 @@ const { title } = Astro.props;
       isWindowFocused = false;
     });
 
-    setTimeout(() => {
-      launchConfetti();
+    function runConfettiWithIntensity() {
+      if (!isWindowFocused || hasReachedMaxIntensity) return;
 
-      setInterval(() => {
-        intensity += 0.5;
+      switch (intensity) {
+        case 1:
+          const starDefaults = {
+            spread: 360,
+            ticks: 50,
+            gravity: 0,
+            decay: 0.94,
+            startVelocity: 30,
+            shapes: ["star"],
+            colors: ["#ffe400", "#ffbd00", "#e89400", "#ffca6c", "#fdffb8"],
+          };
 
-        if (intensity > 3) {
-          intensity = 3;
+          function shootStars() {
+            // @ts-ignore
+            confetti({
+              ...starDefaults,
+              particleCount: 40,
+              scalar: 1.2,
+              shapes: ["star"],
+            });
+            // @ts-ignore
+            confetti({
+              ...starDefaults,
+              particleCount: 10,
+              scalar: 0.75,
+              shapes: ["circle"],
+            });
+          }
+
+          shootStars();
+          setTimeout(shootStars, 100);
+          setTimeout(shootStars, 200);
+          break;
+
+        case 2:
+          const multiColorDefaults = {
+            spread: 360,
+            ticks: 100,
+            gravity: 0,
+            decay: 0.94,
+            startVelocity: 30,
+          };
+
+          function shootMultiColor() {
+            // @ts-ignore
+            confetti({
+              ...multiColorDefaults,
+              particleCount: 40,
+              scalar: 1.5,
+              shapes: ["circle", "square"],
+              colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+            });
+            // @ts-ignore
+            confetti({
+              ...multiColorDefaults,
+              particleCount: 40,
+              scalar: 2,
+              shapes: ["emoji"],
+              shapeOptions: {
+                emoji: {
+                  value: ["🦄", "🌈"],
+                },
+              },
+            });
+          }
+
+          shootMultiColor();
+          setTimeout(shootMultiColor, 100);
+          setTimeout(shootMultiColor, 200);
+          break;
+
+        case 3:
+          const duration = 15 * 1000;
+          const animationEnd = Date.now() + duration;
+          const randomDefaults = {
+            startVelocity: 30,
+            spread: 360,
+            ticks: 60,
+            zIndex: 0,
+          };
+
+          function randomInRange(min: number, max: number) {
+            return Math.random() * (max - min) + min;
+          }
+
+          const interval = setInterval(function () {
+            const timeLeft = animationEnd - Date.now();
+            if (timeLeft <= 0) {
+              return clearInterval(interval);
+            }
+
+            const particleCount = 50 * (timeLeft / duration);
+            // @ts-ignore
+            confetti(
+              Object.assign({}, randomDefaults, {
+                particleCount,
+                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+              }),
+            );
+            // @ts-ignore
+            confetti(
+              Object.assign({}, randomDefaults, {
+                particleCount,
+                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+              }),
+            );
+          }, 250);
+          break;
+      }
+    }
+
+    const intensityInterval = setInterval(() => {
+      if (isWindowFocused) {
+        if (intensity < 3) {
+          intensity++;
+          runConfettiWithIntensity();
+        } else {
+          hasReachedMaxIntensity = true;
+          clearInterval(intensityInterval);
         }
-
-        launchConfetti();
-      }, 15000);
+      }
     }, 15000);
+
+    setTimeout(runConfettiWithIntensity, 15000);
   }
 
   document.addEventListener("visibilitychange", () => {
