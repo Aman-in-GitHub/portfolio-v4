@@ -1,4 +1,5 @@
 export const EMAIL_ADDRESS = "amanchandinc@gmail.com";
+export const GITHUB = "https://github.com/Aman-in-GitHub";
 
 export const PROJECTS = [
   {
