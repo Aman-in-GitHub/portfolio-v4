@@ -12,6 +12,12 @@ import { EMAIL_ADDRESS } from "@/utils/info";
 
 <Layout title="Aman Chand">
   <main class="max-w-[500px] lg:max-w-[750px] flex flex-col gap-6 lg:gap-8">
+    <img
+      src="/gengar.png"
+      alt="Scary Gengar"
+      class="size-20 lg:size-40 absolute top-4 right-4 opacity-0 hover:opacity-100 duration-[3s]"
+    />
+
     <a href="/">
       <h1
         class="text-neutral-400 hover:text-special duration-500 text-4xl font-special"
@@ -120,6 +126,23 @@ import { EMAIL_ADDRESS } from "@/utils/info";
     </section> -->
 
     <section class="flex flex-col gap-4 lg:gap-6">
+      <h2 class="font-special text-3xl text-neutral-400 mb-2">
+        Previous portfolios
+      </h2>
+      <div class="flex flex-col md:flex-row gap-4 lg:gap-6">
+        <div class="flex gap-4 lg:gap-6">
+          <Link title="First Portfolio" href="https://v-1.amanchand.com.np" />
+          <Link title="Second Portfolio" href="https://v0.amanchand.com.np" />
+        </div>
+
+        <div class="flex gap-4 lg:gap-6">
+          <Link title="Third Portfolio" href="https://v1.amanchand.com.np" />
+          <Link title="Fourth Portfolio" href="https://v2.amanchand.com.np" />
+        </div>
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-4 lg:gap-6">
       <h2 class="font-special text-3xl text-neutral-400 mb-2">Contact</h2>
       <p>
         Send a message at <Link
@@ -129,7 +152,7 @@ import { EMAIL_ADDRESS } from "@/utils/info";
       </p>
     </section>
 
-    <section class="relative mt-12 lg:mt-36">
+    <section class="relative mt-20 lg:mt-40">
       <Footer client:load />
     </section>
   </main>

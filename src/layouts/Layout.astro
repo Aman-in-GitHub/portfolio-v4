@@ -23,7 +23,7 @@ const { title } = Astro.props;
       name="keywords"
       content="software developer, portfolio, programming, web development, app development"
     />
-    <link rel="canonical" href="https://www.amanchand.com.np" />
+    <link rel="canonical" href="https://amanchand.com.np" />
     <meta name="robots" content="index, follow" />
     <meta name="viewport" content="width=device-width" />
     <meta property="og:title" content={title} />
@@ -32,11 +32,15 @@ const { title } = Astro.props;
       content="I am Aman, a software developer. I make software that people can use."
     />
     <meta property="og:image" content="/pwa-512x512.png" />
-    <meta property="og:url" content="https://www.amanchand.com.np" />
+    <meta property="og:url" content="https://amanchand.com.np" />
     <meta property="og:type" content="website" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
     <title>{title}</title>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"
+      defer></script>
     <script
       is:inline
       type="application/ld+json"
@@ -45,7 +49,7 @@ const { title } = Astro.props;
         "@type": "Person",
         name: "Aman Chand",
         jobTitle: "Software Developer",
-        url: "https://www.amanchand.com.np",
+        url: "https://amanchand.com.np",
         sameAs: ["https://github.com/Aman-in-Github"],
       })}
     />
@@ -57,3 +61,34 @@ const { title } = Astro.props;
     <slot />
   </body>
 </html>
+
+<script>
+  let intensity = 1;
+
+  function launchConfetti() {
+    // @ts-ignore
+    confetti({
+      particleCount: 250 * intensity,
+      spread: 75 * intensity,
+      origin: { y: 1 },
+    });
+  }
+
+  function startConfettiSequence() {
+    setTimeout(() => {
+      launchConfetti();
+
+      setInterval(() => {
+        intensity += 0.5;
+
+        if (intensity > 3) {
+          intensity = 3;
+        }
+
+        launchConfetti();
+      }, 30000);
+    }, 30000);
+  }
+
+  startConfettiSequence();
+</script>
