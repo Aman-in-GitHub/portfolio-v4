@@ -1,6 +1,7 @@
 ---
 import "@fontsource/poppins";
 import "@fontsource/meow-script";
+import Posthog from "@/components/posthog.astro";
 
 interface Props {
   title: string;
@@ -52,6 +53,7 @@ const { title } = Astro.props;
   <body
     class="min-h-screen bg-background text-body font-body flex justify-center mt-12 lg:mt-36 px-12 selection:bg-neutral-800"
   >
+    <Posthog />
     <slot />
   </body>
 </html>

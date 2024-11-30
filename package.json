@@ -15,7 +15,7 @@
     "@astrojs/tailwind": "^5.1.2",
     "@fontsource/meow-script": "^5.1.0",
     "@fontsource/poppins": "^5.1.0",
-    "@phosphor-icons/react": "^2.1.7",
+    "@supabase/supabase-js": "^2.46.2",
     "astro": "^4.16.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
