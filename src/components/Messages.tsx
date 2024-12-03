@@ -182,7 +182,7 @@ function Messages() {
                 : "Type a message"
           }
           ref={messageRef}
-          className={`w-full bg-background border-2 border-t-0 border-neutral-800 p-4 text-body outline-none ${
+          className={`text-sm lg:text-base w-full bg-background border-2 border-t-0 border-neutral-800 p-4 text-body outline-none ${
             isError && "placeholder-red-300 bg-red-950"
           }`}
           onKeyDown={(e) => {
@@ -197,7 +197,7 @@ function Messages() {
           } ${isError ? "bg-red-700" : "bg-green-700"}`}
           onClick={handleMessageSubmit}
         >
-          <SendIcon className="size-8" fill="white" />
+          <SendIcon className="size-6 lg:size-7" fill="white" />
         </button>
       </div>
     </div>
