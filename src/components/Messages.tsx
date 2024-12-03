@@ -200,6 +200,7 @@ function Messages() {
           } ${isError ? "bg-red-700" : "bg-green-700"}`}
           onClick={handleMessageSubmit}
           disabled={isSending}
+          aria-label="Send message"
         >
           <SendIcon className="size-6 lg:size-7" fill="white" />
         </button>
