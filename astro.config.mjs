@@ -31,7 +31,8 @@ export default defineConfig({
       manifest: {
         name: "Aman Chand",
         short_name: "Aman",
-        theme_color: "#7287fd",
+        theme_color: "#1e66f5",
+        background_color: "#000000",
         icons: [
           {
             src: "/pwa-192x192.png",
