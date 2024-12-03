@@ -60,6 +60,7 @@ function Messages() {
       });
     }
   }
+
   function getRandomColor() {
     let uniqueColors = colors.filter((color) => color !== lastUsedColor);
 
@@ -187,6 +188,8 @@ function Messages() {
           }`}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
+              if (isSending) return;
+
               handleMessageSubmit();
             }
           }}
@@ -196,6 +199,7 @@ function Messages() {
             isSending && "opacity-40"
           } ${isError ? "bg-red-700" : "bg-green-700"}`}
           onClick={handleMessageSubmit}
+          disabled={isSending}
         >
           <SendIcon className="size-6 lg:size-7" fill="white" />
         </button>
