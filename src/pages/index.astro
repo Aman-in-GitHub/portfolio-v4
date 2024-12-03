@@ -2,7 +2,7 @@
 import "@/styles/globals.css";
 import Layout from "@/layouts/Layout.astro";
 import Link from "@/components/Link.astro";
-// import Messages from "@/components/Messages";
+import Messages from "@/components/Messages";
 import Footer from "@/components/Footer";
 import { GITHUB, PROJECTS } from "@/utils/info";
 import { ACHIEVEMENTS } from "@/utils/info";
@@ -133,12 +133,12 @@ import { EMAIL_ADDRESS } from "@/utils/info";
       </p>
     </section>
 
-    <!-- <section class="flex flex-col gap-4 lg:gap-6">
+    <section class="flex flex-col gap-4 lg:gap-6">
       <h2 class="font-special text-3xl mb-2 text-neutral-400">
         Leave a message
       </h2>
       <Messages client:only="react" />
-    </section> -->
+    </section>
 
     <section class="flex flex-col gap-4 lg:gap-6">
       <h2 class="font-special text-3xl text-neutral-400 mb-2">

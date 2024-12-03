@@ -40,11 +40,6 @@ const { title } = Astro.props;
     <Posthog />
     <script
       is:inline
-      defer
-      src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"
-    ></script>
-    <script
-      is:inline
       type="application/ld+json"
       set:html={JSON.stringify({
         "@context": "https://schema.org",
@@ -60,14 +55,18 @@ const { title } = Astro.props;
     class="min-h-screen bg-background text-body font-body flex justify-center mt-12 lg:mt-36 px-12 selection:bg-neutral-800"
   >
     <slot />
+    <div
+      id="countdown"
+      class="text-3xl lg:text-5xl font-special fixed bottom-2 right-4 lg:bottom-8 lg:right-12 select-none"
+    >
+    </div>
   </body>
 </html>
 
 <script>
+  import { confetti } from "@tsparticles/confetti";
+
   const today = new Date();
-  let intensity = 0;
-  let isWindowFocused = true;
-  let hasReachedMaxIntensity = false;
 
   const charmander =
     "              _.--\"\"`-..\r\n            ,\'          `.\r\n          ,\'          __  `.\r\n         \/|          \" __   \\\r\n        , |           \/ |.   .\r\n        |,\'          !_.\'|   |\r\n      ,\'             \'   |   |\r\n     \/              |`--\'|   |\r\n    |                `---\'   |\r\n     .   ,                   |                       ,\".\r\n      ._     \'           _\'  |                    , \' \\ `\r\n  `.. `.`-...___,...---\"\"    |       __,.        ,`\"   L,|\r\n  |, `- .`._        _,-,.\'   .  __.-\'-. \/        .   ,    \\\r\n-:..     `. `-..--_.,.<       `\"      \/ `.        `-\/ |   .\r\n  `,         \"\"\"\"\'     `.              ,\'         |   |  \',,\r\n    `.      \'            \'            \/          \'    |\'. |\/\r\n      `.   |              \\       _,-\'           |       \'\'\r\n        `._\'               \\   \'\"\\                .      |\r\n           |                \'     \\                `._  ,\'\r\n           |                 \'     \\                 .\'|\r\n           |                 .      \\                | |\r\n           |                 |       L              ,\' |\r\n           `                 |       |             \/   \'\r\n            \\                |       |           ,\'   \/\r\n          ,\' \\               |  _.._ ,-..___,..-\'    ,\'\r\n         \/     .             .      `!             ,j\'\r\n        \/       `.          \/        .           .\'\/\r\n       .          `.       \/         |        _.\'.\'\r\n        `.          7`\'---\'          |------\"\'_.\'\r\n       _,.`,_     _\'                ,\'\'-----\"\'\r\n   _,-_    \'       `.     .\'      ,\\\r\n   -\" \/`.         _,\'     | _  _  _.|\r\n    \"\"--\'---\"\"\"\"\"\'        `\' \'! |! \/\r\n                            `\" \" -\'";
@@ -101,11 +100,9 @@ const { title } = Astro.props;
 
   const isDayTime = today.getHours() > 6 && today.getHours() < 18;
   const isJunkoBirthday = today.getMonth() === 0 && today.getDate() === 18;
-  const isTodayBirthday =
-    isWindowFocused && today.getMonth() === 10 && today.getDate() === 5;
+  const isTodayBirthday = today.getMonth() === 10 && today.getDate() === 5;
   const isTodayHalloween = today.getMonth() === 9 && today.getDate() === 31;
-  const isTodayValentine =
-    isWindowFocused && today.getMonth() === 1 && today.getDate() === 14;
+  const isTodayValentine = today.getMonth() === 1 && today.getDate() === 14;
 
   if (isTodayHalloween) {
     console.log(gengar);
@@ -193,147 +190,56 @@ const { title } = Astro.props;
     });
   }
 
-  function startConfettiSequence() {
-    window.addEventListener("focus", () => {
-      isWindowFocused = true;
-    });
+  function runConfetti() {
+    const duration = 15 * 1000;
+    const animationEnd = Date.now() + duration;
+    const randomDefaults = {
+      startVelocity: 30,
+      spread: 360,
+      ticks: 60,
+      zIndex: 0,
+    };
 
-    window.addEventListener("blur", () => {
-      isWindowFocused = false;
-    });
-
-    function runConfettiWithIntensity() {
-      if (!isWindowFocused || hasReachedMaxIntensity) return;
-
-      switch (intensity) {
-        case 1:
-          const starDefaults = {
-            spread: 360,
-            ticks: 50,
-            gravity: 0,
-            decay: 0.94,
-            startVelocity: 30,
-            shapes: ["star"],
-            colors: ["#ffe400", "#ffbd00", "#e89400", "#ffca6c", "#fdffb8"],
-          };
-
-          function shootStars() {
-            // @ts-ignore
-            confetti({
-              ...starDefaults,
-              particleCount: 40,
-              scalar: 1.25,
-              shapes: ["star"],
-            });
-            // @ts-ignore
-            confetti({
-              ...starDefaults,
-              particleCount: 20,
-              scalar: 1,
-              shapes: ["circle"],
-            });
-          }
-
-          shootStars();
-          setTimeout(shootStars, 100);
-          setTimeout(shootStars, 200);
-          break;
-
-        case 2:
-          const multiColorDefaults = {
-            spread: 360,
-            ticks: 100,
-            gravity: 0,
-            decay: 0.94,
-            startVelocity: 30,
-          };
-
-          function shootMultiColor() {
-            // @ts-ignore
-            confetti({
-              ...multiColorDefaults,
-              particleCount: 60,
-              scalar: 1.5,
-              shapes: ["circle", "square"],
-              colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
-            });
-            // @ts-ignore
-            confetti({
-              ...multiColorDefaults,
-              particleCount: 40,
-              scalar: 2,
-              shapes: ["emoji"],
-              shapeOptions: {
-                emoji: {
-                  value: ["🦄", "🌈"],
-                },
-              },
-            });
-          }
-
-          shootMultiColor();
-          setTimeout(shootMultiColor, 100);
-          setTimeout(shootMultiColor, 200);
-          break;
-
-        case 3:
-          const duration = 15 * 1000;
-          const animationEnd = Date.now() + duration;
-          const randomDefaults = {
-            startVelocity: 30,
-            spread: 360,
-            ticks: 60,
-            zIndex: 0,
-          };
-
-          function randomInRange(min: number, max: number) {
-            return Math.random() * (max - min) + min;
-          }
-
-          const interval = setInterval(function () {
-            const timeLeft = animationEnd - Date.now();
-            if (timeLeft <= 0) {
-              return clearInterval(interval);
-            }
-
-            const particleCount = 50 * (timeLeft / duration);
-            // @ts-ignore
-            confetti(
-              Object.assign({}, randomDefaults, {
-                particleCount,
-                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-              }),
-            );
-            // @ts-ignore
-            confetti(
-              Object.assign({}, randomDefaults, {
-                particleCount,
-                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-              }),
-            );
-          }, 250);
-          break;
-      }
+    function randomInRange(min: number, max: number) {
+      return Math.random() * (max - min) + min;
     }
 
-    const intensityInterval = setInterval(() => {
-      if (isWindowFocused) {
-        if (intensity < 3) {
-          intensity++;
-          runConfettiWithIntensity();
-        } else {
-          hasReachedMaxIntensity = true;
-          clearInterval(intensityInterval);
-        }
+    const interval = setInterval(function () {
+      const timeLeft = animationEnd - Date.now();
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
       }
-    }, 20000);
 
-    setTimeout(runConfettiWithIntensity, 20000);
+      const particleCount = 50 * (timeLeft / duration);
+      // @ts-ignore
+      confetti(
+        Object.assign({}, randomDefaults, {
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+        }),
+      );
+      // @ts-ignore
+      confetti(
+        Object.assign({}, randomDefaults, {
+          particleCount,
+          origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+        }),
+      );
+    }, 250);
   }
 
-  document.addEventListener("visibilitychange", () => {
-    isWindowFocused = !document.hidden;
-  });
+  let timeLeft = 30;
+  const countdownElement = document.getElementById("countdown") as HTMLElement;
+  countdownElement.textContent = timeLeft.toString();
 
-  startConfettiSequence();
+  const timerInterval = setInterval(() => {
+    timeLeft--;
+    countdownElement.textContent = timeLeft.toString();
+
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+      runConfetti();
+      countdownElement.remove();
+    }
+  }, 1000);
 </script>
