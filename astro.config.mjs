@@ -30,8 +30,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       manifest: {
         name: "Aman Chand",
-        short_name: "Aman Portfolio",
-        theme_color: "#d20f39",
+        short_name: "Aman",
+        theme_color: "#7287fd",
         icons: [
           {
             src: "/pwa-192x192.png",
