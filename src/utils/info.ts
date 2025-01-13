@@ -21,6 +21,11 @@ export const PROJECTS = [
 
 export const ACHIEVEMENTS = [
   {
+    title: "KECIT HACKATHON 2025",
+    description: "1st Runner-Up (2nd Place)",
+    link: "https://github.com/Aman-in-GitHub/KECIT-Hackathon-2025",
+  },
+  {
     title: "KU HACKFEST 2024",
     description: "Best Project in OSM Category",
     link: "https://github.com/Aman-in-GitHub/Surakshya-KUHackfest-2024",
