@@ -110,6 +110,17 @@ function Messages() {
       return;
     }
 
+    if (name.toLowerCase().includes("aman")) {
+      setIsSending(true);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      alert("That's my name :|");
+      messageRef.current.value = "";
+      setIsSending(false);
+      setIsError(true);
+      return;
+    }
+
     messageRef.current.value = "";
     setIsError(false);
     setIsSending(true);
@@ -151,7 +162,11 @@ function Messages() {
           ) : (
             <div className="px-4 py-2 text-sm lg:text-base">
               {messages.map((message) => (
-                <div key={message.id} className="flex gap-2 items-center my-1">
+                <div
+                  key={message.id}
+                  className="flex gap-2 items-center my-1"
+                  title={`${message.name} at ${new Date(message.created_at).toLocaleString()}`}
+                >
                   <p
                     style={{
                       color: message.color || "#ffffff",
@@ -159,8 +174,8 @@ function Messages() {
                     className="whitespace-nowrap font-semibold"
                   >
                     {message.name.length > 20
-                      ? message.name.slice(0, 20) + "..."
-                      : message.name}
+                      ? message.name.split(" ")[0].slice(0, 20) + "..."
+                      : message.name.split(" ")[0]}
                   </p>
                   <p className="text-body whitespace-nowrap">
                     {message.message}

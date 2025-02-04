@@ -8,6 +8,11 @@ export const PROJECTS = [
     link: "https://hoteldolmaling.com",
   },
   {
+    title: "TheRizzBook",
+    description: "A GEN-Z Inspired Conversation Guide",
+    link: "https://therizzbook.pages.dev",
+  },
+  {
     title: "NewsBit",
     description: "A Newsletter for TU University",
     link: "https://newsbit.amanchand.com.np",
